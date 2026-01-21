@@ -8,8 +8,14 @@ uuidv4();
 const TodoList = () => {
   const [todoValue, setTodoValue] = useState([]);
   const createTodo = (todo) => {
-    setTodoValue([...todoValue, {id: uuidv4(), task: todo, isEdit: false}])
+    setTodoValue([...todoValue, {id: uuidv4(), task: todo, isEdit: false, isComplete: false}])
   }
+  const toggleComplete = (id) => {
+    setTodoValue(
+      todoValue.map((todo) => todo.id === id ? {...todo, isComplete: !todo.isComplete} : todo)
+    )
+  }
+
   const deleteTodo = (id) => {
     // 배열에서 id가 같지 않은 
     setTodoValue(todoValue.filter((todo) => todo.id !== id))
@@ -30,11 +36,12 @@ const TodoList = () => {
       <Form createTodo={createTodo} />
 
       {
-        todoValue.map((todo, idx) => 
+        [...todoValue].sort((a, b) => a.isComplete - b.isComplete).
+        map((todo, idx) => 
           todo.isEdit ? (
             <Edit key={idx} task={todo} editTask={editTask} />
           ): (
-            <Todo key={idx} task={todo} deleteTodo={deleteTodo} editTodo={editTodo} />
+            <Todo key={idx} task={todo} deleteTodo={deleteTodo} editTodo={editTodo} toggleComplete={toggleComplete} />
           )
         )
       }
