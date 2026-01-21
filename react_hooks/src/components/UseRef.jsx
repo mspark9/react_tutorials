@@ -4,23 +4,51 @@
 import { useRef, useState } from "react"
 
 const UseRef = () => {
-    const [count, setCount] = useState(0);
-    const countRef = useRef(0);
-    // console.log(countRef.current);
+    // const [count, setCount] = useState(0);
+    // const countRef = useRef(0);
+    // // console.log(countRef.current);
 
-    const increaseState = () => {
-        setCount(count + 1);
-    }
-    const increaseRef = () => {
-        countRef.current += 1;
-    }
+    // const increaseState = () => {
+    //     setCount(count + 1);
+    // }
+    // const increaseRef = () => {/
+    //     countRef.current += 1;
+    // }
 
+    // 변수롸 ref의 차이
+    // 아래 코드에서 Var Up, Ref Up을 클릭하면 화면에는 렌더링 되지 않는 다는 점은 같다.
+    // 하지만 특정 함수(doRendering)를 호출하면 화면이 렌더링 되는데, 이때 Ref 값은 유지되지만 변수 값은 초기화된다.
+
+  const [render, setRender] = useState(0);
+
+  const countRef = useRef(0);
+  let countVar = 0;
+
+  const increaseRef = () => {
+    countRef.current += 1;
+    console.log('Ref: ', countRef.current);
+  }
+  const increaseVar = () => {
+    countVar += 1;
+    console.log('Var: ', countVar);
+  }
+  const doRender = () => {
+    setRender(render + 1);
+  }  
+  
   return (
     <div>
-        <p>state : {count}</p>
+        {/* <p>state : {count}</p>
         <p>Ref : {countRef.current}</p>
         <button onClick={increaseState}>state up</button><br />
-        <button onClick={increaseRef}>Ref up</button>
+        <button onClick={increaseRef}>Ref up</button> */}
+
+        <p>Ref : {countRef.current}</p>
+        <p>Var : {countVar}</p>
+
+        <button onClick={increaseRef}>Ref Up</button>
+        <button onClick={increaseVar}>Var Up</button>
+        <button onClick={doRender}>Render</button>
     </div>
   )
 }
